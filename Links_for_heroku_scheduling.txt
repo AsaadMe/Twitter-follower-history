@@ -1,0 +1,5 @@
+https://blog.finxter.com/how-to-schedule-your-python-script-for-free-on-heroku/
+
+https://medium.com/analytics-vidhya/schedule-a-python-script-on-heroku-a978b2f91ca8
+
+https://devcenter.heroku.com/articles/clock-processes-python

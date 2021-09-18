@@ -14,15 +14,17 @@
         var lineChart = new Chart(ctx, {
             type:"line",
             data: {
-                labels: {{ users | safe }},
+                labels: {{ dates | safe }},
                 datasets: [
+                {% for user in users %}
                     {
-                        label: "counts",
-                        data: {{ counts | safe }},
+                        label: "{{ user["name"] | safe }}",
+                        data: {{ user["counts"] | safe }},
                         fill: false,
                         borderColor: "rgb(75, 192, 192)",
                         lineTension: 0.1
-                    }
+                    },
+                {% endfor %}
                 ]
             }
         });

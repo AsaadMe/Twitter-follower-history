@@ -5,12 +5,19 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    users_history = follower_history.db_set_get()  # {username: follower num.}
+    follower_history.db_set()
+    users_history = follower_history.db_get()  # {username1: {"x-x-x":654, ...}, ...}
     
-    users = [username for username in users_history.keys()]
-    counts = [int(count) for count in users_history.values()]
+    users = []
+    for name, vals in users_history.items():
+        users.append({"name":name, "counts":list(vals.values())})
     
-    return render_template("graph.html", users=users, counts=counts)
+    dates = set()
+    for user_values in users_history.values():
+        for date in user_values.keys():
+            dates.add(date)
+    print(users)
+    return render_template("graph.html", users=users, dates=list(dates))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

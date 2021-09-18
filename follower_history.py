@@ -30,7 +30,22 @@ def db_set():
         out_val.update({today_date:count})
         dbase.set(user, json.dumps(out_val))
 
-
+def db_set_test():
+    dbase = redis.Redis(host='db', port=6379)
+    users = get_users()
+    next_date = '2021-9-20'
+    next2_date = '2021-9-21'
+    for user in users:
+        count = follower_counter(user)
+        out_val = {}
+        if (val := dbase.get(user)) != None:
+            out_val = json.loads(val)
+        out_val.update({next_date:count+330})
+        dbase.set(user, json.dumps(out_val))
+        
+        out_val.update({next2_date:count-110})
+        dbase.set(user, json.dumps(out_val))
+    
 def db_get():
     dbase = redis.Redis(host='db', port=6379)
     users = get_users()

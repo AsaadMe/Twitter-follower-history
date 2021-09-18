@@ -8,9 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 </head>
 <body>
-    <canvas id="lineChart"></canvas>
+    <canvas id="lineChart" style="max-height: 700px; margin: 0 auto;"></canvas>
+    <form method ="post" action="/">
+        <button id="update" type="submit" >Update Chart</button>
+    </form>
     <script>
         var ctx = document.getElementById("lineChart").getContext("2d");
+        const COLORS = [
+            '#4dc9f6',
+            '#f67019',
+            '#f53794',
+            '#537bc4',
+            '#acc236',
+            '#166a8f',
+            '#00a950',
+            '#58595b',
+            '#8549ba'
+            ];
         var lineChart = new Chart(ctx, {
             type:"line",
             data: {
@@ -21,7 +35,7 @@
                         label: "{{ user["name"] | safe }}",
                         data: {{ user["counts"] | safe }},
                         fill: false,
-                        borderColor: "rgb(75, 192, 192)",
+                        borderColor: COLORS[Math.floor(Math.random() * COLORS.length)],
                         lineTension: 0.1
                     },
                 {% endfor %}

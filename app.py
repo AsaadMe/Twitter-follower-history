@@ -4,8 +4,8 @@ import follower_history
 app = Flask(__name__)
 
 def read_data():
-    follower_history.db_set()    
-    users_history = follower_history.db_get()  # {username1: {"x-x-x":654, ...}, ...}
+    follower_history.pg_set()    
+    users_history = follower_history.pg_get()  # {username1: {"x-x-x":654, ...}, ...}
     
     users = []
     for name, vals in users_history.items():
@@ -20,7 +20,7 @@ def read_data():
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        follower_history.db_set_test()
+        follower_history.pg_set_test()
         redirect('/')
           
     users, dates = read_data()

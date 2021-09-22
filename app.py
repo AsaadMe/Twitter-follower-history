@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import follower_history
 
 app = Flask(__name__)
@@ -21,10 +21,10 @@ def read_data():
 def index():
     if request.method == 'POST':
         follower_history.pg_set_test()
-        redirect('/')
-          
-    users, dates = read_data()
-    return render_template("graph.html", users=users, dates=dates)
+        return redirect(url_for("index"))
+    else:      
+        users, dates = read_data()
+        return render_template("graph.html", users=users, dates=dates)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -54,9 +54,7 @@ def redis_get():
 
 
 def pg_set():
-    connection = create_connection(
-    "fol-tw", "usr", "secret", "db", "5432")
-    create_table(connection)
+    connection = create_connection()
     insert_query = "INSERT INTO users (name, count, date) VALUES (%s, %s, %s)"
     user_names = get_users()
     today_date = str(datetime.date.today())
@@ -68,8 +66,7 @@ def pg_set():
             insert_exec(connection, insert_query, (user, count, today_date))
     
 def pg_set_test():
-    connection = create_connection(
-    "fol-tw", "usr", "secret", "db", "5432")
+    connection = create_connection()
     insert_query = "INSERT INTO users (name, count, date) VALUES (%s, %s, %s)"
     user_names = get_users()
     next_date = '2021-09-23'
@@ -84,8 +81,7 @@ def pg_set_test():
             
            
 def pg_get():
-    connection = create_connection(
-    "fol-tw", "usr", "secret", "db", "5432")
+    connection = create_connection()
     out = {}
     for user_name in get_users():
         select_users = "SELECT * FROM users WHERE name=%s"

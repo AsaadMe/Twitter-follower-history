@@ -1,20 +1,17 @@
+import os
+
 import psycopg2
 from psycopg2 import OperationalError
 
-# for heroku:
-# import os
-# DATABASE_URL = os.environ['DATABASE_URL']
-# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
-def create_connection(db_name, db_user, db_password, db_host, db_port):
+DATABASE_URL = os.environ['DATABASE_URL']
+
+def create_connection():
     connection = None
     try:
         connection = psycopg2.connect(
-            database=db_name,
-            user=db_user,
-            password=db_password,
-            host=db_host,
-            port=db_port,
+            DATABASE_URL,
+            sslmode='require'
         )
         print("Connection to PostgreSQL DB successful")
     except OperationalError as e:

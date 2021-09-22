@@ -1,4 +1,6 @@
-* Show history of twitter followers count of accounts in chart.js.
-* Using Flask, Redis, Dockerfile and docker-compose.
+# Twitter Follower History
+
+* Show history of followers in chart.js.
+* The web app tracks some IRI regime apologists.
+* Using Flask, Redis, Postgres, Dockerfile and docker-compose.
 * Run with: docker-compose up --build
-* To fetch history periodically see `Links_for_heroku_scheduling.txt` to run it in heroku. 

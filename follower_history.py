@@ -10,10 +10,7 @@ def follower_counter(username):
     
     link = "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names="
 
-    # return requests.get(link+username).json()[0]["followers_count"]
-    outs = {"tparsi":120, "ammir":230, "hamzeghalebi":490, "azodiac83":123, "h0d3r_fa":450, 
-            "GhoreishiG":390, "solmazazhdari":256, "farnazfassihi":765, "negarmortazavi":670}
-    return outs[username]
+    return requests.get(link+username).json()[0]["followers_count"]
 
 def get_users():
     with open("accounts.txt", "r") as file:

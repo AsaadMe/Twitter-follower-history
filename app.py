@@ -20,7 +20,7 @@ def read_data():
 @app.route('/', methods = ['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        follower_history.pg_set_test()
+        follower_history.pg_set()
         return redirect(url_for("index"))
     else:      
         users, dates = read_data()

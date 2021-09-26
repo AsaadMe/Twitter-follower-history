@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, request, redirect, url_for
 import follower_history
 
@@ -15,7 +17,11 @@ def read_data():
     for user_values in users_history.values():
         for date in user_values.keys():
             dates.add(date)
-    return users, list(dates)
+    
+    dates = [datetime.datetime.strptime(ts, "%Y-%m-%d") for ts in dates]
+    dates.sort()
+    sorteddates = [datetime.datetime.strftime(ts, "%Y-%m-%d") for ts in dates]
+    return users, sorteddates
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():

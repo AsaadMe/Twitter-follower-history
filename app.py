@@ -18,9 +18,13 @@ def read_data():
     return users, list(dates)
 
 @app.route('/', methods = ['POST', 'GET'])
-def index():      
-    users, dates = read_data()
-    return render_template("graph.html", users=users, dates=dates)
+def index():
+    if request.method == 'POST':
+        follower_history.pg_set_test()
+        return redirect(url_for("index"))
+    else:     
+        users, dates = read_data()
+        return render_template("graph.html", users=users, dates=dates)
 
 if __name__ == "__main__":
-    app.run(threaded=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)

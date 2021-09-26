@@ -1,17 +1,17 @@
-import os
-
 import psycopg2
 from psycopg2 import OperationalError
 
 
-DATABASE_URL = os.environ['DATABASE_URL']
 
-def create_connection():
+def create_connection(db_name, db_user, db_password, db_host, db_port):
     connection = None
     try:
         connection = psycopg2.connect(
-            DATABASE_URL,
-            sslmode='require'
+            database=db_name,
+            user=db_user,
+            password=db_password,
+            host=db_host,
+            port=db_port,
         )
         print("Connection to PostgreSQL DB successful")
     except OperationalError as e:

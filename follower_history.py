@@ -9,8 +9,10 @@ import requests
 def follower_counter(username):
     
     link = "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names="
-
-    return requests.get(link+username).json()[0]["followers_count"]
+    outs = {"tparsi":120, "ammir":230, "hamzeghalebi":490, "azodiac83":123, "h0d3r_fa":450, 
+            "GhoreishiG":390, "solmazazhdari":256, "farnazfassihi":765, "negarmortazavi":670}
+    return outs[username]
+    #return requests.get(link+username).json()[0]["followers_count"]
 
 def get_users():
     with open("accounts.txt", "r") as file:
@@ -51,7 +53,8 @@ def redis_get():
 
 
 def pg_set():
-    connection = create_connection()
+    connection = create_connection("fol-tw", "usr", "secret", "db", "5432")
+    create_table(connection)
     insert_query = "INSERT INTO users (name, count, date) VALUES (%s, %s, %s)"
     user_names = get_users()
     today_date = str(datetime.date.today())
@@ -63,11 +66,11 @@ def pg_set():
             insert_exec(connection, insert_query, (user, count, today_date))
     
 def pg_set_test():
-    connection = create_connection()
+    connection = create_connection("fol-tw", "usr", "secret", "db", "5432")
     insert_query = "INSERT INTO users (name, count, date) VALUES (%s, %s, %s)"
     user_names = get_users()
-    next_date = '2021-09-23'
-    next2_date = '2021-09-25'
+    next_date = '2021-10-23'
+    next2_date = '2021-11-25'
     for user in user_names:
         count = follower_counter(user)
         get_q = "SELECT date FROM users WHERE (date=%s OR date=%s) AND name=%s"
@@ -78,7 +81,7 @@ def pg_set_test():
             
            
 def pg_get():
-    connection = create_connection()
+    connection = create_connection("fol-tw", "usr", "secret", "db", "5432")
     out = {}
     for user_name in get_users():
         select_users = "SELECT * FROM users WHERE name=%s"

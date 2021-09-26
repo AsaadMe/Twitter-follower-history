@@ -5,10 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Follower Graph</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
 </head>
 <body>
-    <canvas id="lineChart" style="max-height: 700px; margin: 0 auto;"></canvas>
+    <form method ="post">
+        <button id="update" type="submit" >Update Chart</button>
+    </form>
+    <canvas id="lineChart"></canvas>
     <script>
         var ctx = document.getElementById("lineChart").getContext("2d");
         const COLORS = [
@@ -22,6 +25,7 @@
             '#58595b',
             '#8549ba'
             ];
+
         var lineChart = new Chart(ctx, {
             type:"line",
             data: {
@@ -33,13 +37,39 @@
                         data: {{ user["counts"] | safe }},
                         fill: false,
                         borderColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-                        lineTension: 0.1
+                        lineTension: 0.1,
+                        {% if user["name"] != 'farnazfassihi' %}
+                            hidden: true
+                        {% endif %}
                     },
                 {% endfor %}
                 ]
-            }
-        });
+            },
 
+            options: {
+                plugins: {
+
+                    legend: {
+                
+                        onHover: function(evt, item, legend) {
+                            legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+                                colors[index] = index === item.index || color.length === 9 ? color : color + '4D';
+                            });
+                            legend.chart.update();
+                            },
+                        onLeave: function(evt, item, legend) {
+                            legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
+                                colors[index] = color.length === 9 ? color.slice(0, -2) : color;
+                            });
+                            legend.chart.update();
+                            }
+                    } 
+                }
+              }
+            
+            
+          });
+          
     </script>
 </body>
 </html>

@@ -33,7 +33,10 @@
                         data: {{ user["counts"] | safe }},
                         fill: false,
                         borderColor: COLORS[Math.floor(Math.random() * COLORS.length)],
-                        lineTension: 0.1
+                        lineTension: 0.1,
+                        {% if user["name"] != 'farnazfassihi' %}
+                            hidden: true
+                        {% endif %}
                     },
                 {% endfor %}
                 ]

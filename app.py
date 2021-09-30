@@ -9,10 +9,6 @@ def read_data():
     follower_history.pg_set()    
     users_history = follower_history.pg_get()  # {username1: {"x-x-x":654, ...}, ...}
     
-    users = []
-    for name, vals in users_history.items():
-        users.append({"name":name, "counts":list(vals.values())})
-    
     dates = set()
     for user_values in users_history.values():
         for date in user_values.keys():
@@ -21,6 +17,13 @@ def read_data():
     dates = [datetime.datetime.strptime(ts, "%Y-%m-%d") for ts in dates]
     dates.sort()
     sorteddates = [datetime.datetime.strftime(ts, "%Y-%m-%d") for ts in dates]
+    
+    users = []
+    for name, vals in users_history.items():
+        counts = [0] * len(sorteddates)
+        counts[-len(list(vals.values())):] = list(vals.values())
+        users.append({"name":name, "counts":counts})
+    
     return users, sorteddates
 
 @app.route('/', methods = ['POST', 'GET'])

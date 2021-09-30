@@ -79,7 +79,6 @@ def pg_set_test():
             insert_exec(connection, insert_query, (user, count+320, next_date))
             insert_exec(connection, insert_query, (user, count-120, next2_date))
             
-           
 def pg_get():
     connection = create_connection("fol-tw", "usr", "secret", "db", "5432")
     out = {}

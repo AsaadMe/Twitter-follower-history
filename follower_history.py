@@ -12,9 +12,13 @@ def follower_counter(username):
 
     return requests.get(link+username).json()[0]["followers_count"]
 
+# def get_users():
+#     with open("accounts.txt", "r") as file:
+#         return file.read().splitlines()
+
 def get_users():
-    with open("accounts.txt", "r") as file:
-        return file.read().splitlines()
+    users = os.environ['USERS']
+    return users.split(',')
     
 def redis_set():
     dbase = redis.Redis(host='db', port=6379)

@@ -20,8 +20,9 @@ def read_data():
     
     users = []
     for name, vals in users_history.items():
-        counts = [0] * len(sorteddates)
-        counts[-len(list(vals.values())):] = list(vals.values())
+        user_count = list(vals.values())
+        counts = [user_count[0]] * len(sorteddates)
+        counts[-len(list(vals.values())):] = user_count
         users.append({"name":name, "counts":counts})
         
     return users, sorteddates

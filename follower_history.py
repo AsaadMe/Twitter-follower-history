@@ -69,8 +69,8 @@ def pg_set_test():
     connection = create_connection("fol-tw", "usr", "secret", "db", "5432")
     insert_query = "INSERT INTO users (name, count, date) VALUES (%s, %s, %s)"
     user_names = get_users()
-    next_date = '2021-10-23'
-    next2_date = '2021-11-25'
+    next_date = '2022-02-23'
+    next2_date = '2022-08-25'
     for user in user_names:
         count = follower_counter(user)
         get_q = "SELECT date FROM users WHERE (date=%s OR date=%s) AND name=%s"

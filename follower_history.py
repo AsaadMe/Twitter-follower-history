@@ -9,9 +9,11 @@ import requests
 def follower_counter(username):
     
     link = "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names="
-
-    return requests.get(link+username).json()[0]["followers_count"]
-
+    try:
+        return requests.get(link+username).json()[0]["followers_count"]
+    except IndexError:
+        return None
+    
 # def get_users():
 #     with open("accounts.txt", "r") as file:
 #         return file.read().splitlines()
@@ -61,10 +63,11 @@ def pg_set():
     today_date = str(datetime.date.today())
     for user in user_names:
         count = follower_counter(user)
-        get_q = "SELECT date FROM users WHERE date=%s AND name=%s"
-        user_date = execute_read_query(connection, get_q, today_date, user)
-        if len(user_date) == 0:
-            insert_exec(connection, insert_query, (user, count, today_date))
+        if count:
+            get_q = "SELECT date FROM users WHERE date=%s AND name=%s"
+            user_date = execute_read_query(connection, get_q, today_date, user)
+            if len(user_date) == 0:
+                insert_exec(connection, insert_query, (user, count, today_date))
     
 def pg_set_test():
     connection = create_connection()

@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from flask import Flask, render_template, request, redirect, url_for
 import follower_history
@@ -33,4 +34,4 @@ def index():
     return render_template("graph.html", users=users, dates=dates)
 
 if __name__ == "__main__":
-    app.run(threaded=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=os.getenv("PORT", default=5000))

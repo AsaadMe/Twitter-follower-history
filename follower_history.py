@@ -11,7 +11,8 @@ def follower_counter(username):
     link = "https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names="
     try:
         return requests.get(link+username).json()[0]["followers_count"]
-    except IndexError:
+    except Exception as e:
+        print(e)
         return None
     
 # def get_users():
